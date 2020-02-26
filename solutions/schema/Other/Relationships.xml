@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships>
+  <EntityRelationship Name="business_unit_cu_course" />
+  <EntityRelationship Name="business_unit_cu_department" />
+  <EntityRelationship Name="cu_course_department_cu_department" />
+  <EntityRelationship Name="lk_cu_course_createdby" />
+  <EntityRelationship Name="lk_cu_course_modifiedby" />
+  <EntityRelationship Name="lk_cu_department_createdby" />
+  <EntityRelationship Name="lk_cu_department_modifiedby" />
+  <EntityRelationship Name="owner_cu_course" />
+  <EntityRelationship Name="owner_cu_department" />
+  <EntityRelationship Name="team_cu_course" />
+  <EntityRelationship Name="team_cu_department" />
+  <EntityRelationship Name="user_cu_course" />
+  <EntityRelationship Name="user_cu_department" />
+</EntityRelationships>

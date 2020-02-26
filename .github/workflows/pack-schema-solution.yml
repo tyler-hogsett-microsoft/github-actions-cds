@@ -50,6 +50,7 @@ jobs:
           -Name Microsoft.Xrm.Data.PowerShell `
           -Force
         Set-ExecutionPolicy –ExecutionPolicy RemoteSigned –Scope CurrentUser
+      shell: powershell
     - name: Deploy Solution
       run: |
         Import-Module Microsoft.Xrm.Tooling.CrmConnector.PowerShell

@@ -23,4 +23,4 @@ jobs:
         md $toolsFolder\CoreTools
         $coreToolsFolder = Get-ChildItem $toolsFolder | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
         move $coreToolsFolder\content\bin\coretools\*.* $toolsFolder\CoreTools
-        Remove-Item $toolsFolder\$coreToolsFolder -Force -Recurse
+        Remove-Item $coreToolsFolder -Force -Recurse

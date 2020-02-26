@@ -52,8 +52,7 @@ jobs:
         Set-ExecutionPolicy –ExecutionPolicy RemoteSigned –Scope CurrentUser
     - name: Deploy Solution
       run: |
-        Get-InstalledModule `
-          -Name Microsoft.Xrm.Data.PowerShell
+        Import-Module Microsoft.Xrm.Tooling.CrmConnector.PowerShell
         $conn = Get-CrmConnection `
           -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
         Invoke-CrmWhoAmI `

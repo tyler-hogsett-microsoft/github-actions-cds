@@ -49,8 +49,12 @@ jobs:
         Install-Module `
           -Name Microsoft.Xrm.Data.PowerShell `
           -Force
+        Get-InstalledModule `
+          -Name Microsoft.Xrm.Data.PowerShell
     - name: Deploy Solution
       run: |
+        Get-InstalledModule `
+          -Name Microsoft.Xrm.Data.PowerShell
         $conn = Get-CrmConnection `
           -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
         Invoke-CrmWhoAmI `

@@ -9,9 +9,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
+    - name: Install CDS Core Tools
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        ## Download nuget.exe
+        $sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+        $targetNugetExe = "$env:GITHUB_WORKSPACE\nuget.exe"
+        Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
+        Set-Alias nuget $targetNugetExe -Scope Global -Verbose
+
+        $toolsFolder = $env:GITHUB_WORKSPACE\tools
+        ## Download CoreTools
+        nuget install Microsoft.CrmSdk.CoreTools -O $toolsFolder
+        md $toolsFolder\CoreTools
+        $coreToolsFolder = Get-ChildItem $toolsFolder | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
+        move $toolsFolder\$coreToolsFolder\content\bin\coretools\*.* $toolsFolder\CoreTools
+        Remove-Item $toolsFolder\$coreToolsFolder -Force -Recurse

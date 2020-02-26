@@ -2,6 +2,9 @@ name: CI
 
 on: [push]
 
+env:
+  TOOLS_FOLDER: ${{ env.GITHUB_WORKSPACE }}\tools
+
 jobs:
   build:
 
@@ -9,7 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install CDS Core Tools
+    - name: Install CDS CoreTools
       run: |
         ## Download nuget.exe
         $sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
@@ -17,10 +20,9 @@ jobs:
         Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
         Set-Alias nuget $targetNugetExe -Scope Global -Verbose
 
-        $toolsFolder = "$env:GITHUB_WORKSPACE\tools"
         ## Download CoreTools
-        nuget install Microsoft.CrmSdk.CoreTools -O $toolsFolder
-        md $toolsFolder\CoreTools
-        $coreToolsFolder = Get-ChildItem $toolsFolder | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
-        move $coreToolsFolder\content\bin\coretools\*.* $toolsFolder\CoreTools
+        nuget install Microsoft.CrmSdk.CoreTools -O $env:TOOLS_FOLDER
+        md $env:TOOLS_FOLDER\CoreTools
+        $coreToolsFolder = Get-ChildItem $env:TOOLS_FOLDER | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
+        move $coreToolsFolder\content\bin\coretools\*.* $env:TOOLS_FOLDER\CoreTools
         Remove-Item $coreToolsFolder -Force -Recurse

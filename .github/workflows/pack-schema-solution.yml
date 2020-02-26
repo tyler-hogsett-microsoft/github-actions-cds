@@ -41,11 +41,13 @@ jobs:
       with:
         name: packed-solutions
         path: ${{ github.workspace }}\packed-solutions
-    - name: Install Microsoft.Xrm.Data.PowerShell
+    - name: Install PowerShell Modules
       run: |
         Install-Module `
+          -Name Microsoft.Xrm.Tooling.CrmConnector.Powershell `
+          -Force
+        Install-Module `
           -Name Microsoft.Xrm.Data.PowerShell `
-          -Scope CurrentUser `
           -Force
     - name: Deploy Solution
       run: |

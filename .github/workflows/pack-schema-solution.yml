@@ -4,6 +4,7 @@ on: [push]
 
 env:
   TOOLS_FOLDER: ${{ github.workspace }}\tools
+  SOLUTION_NAME: schema
 
 jobs:
   build:
@@ -26,3 +27,12 @@ jobs:
         $coreToolsFolder = Get-ChildItem $env:TOOLS_FOLDER | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
         move $coreToolsFolder\content\bin\coretools\*.* $env:TOOLS_FOLDER\CoreTools
         Remove-Item $coreToolsFolder -Force -Recurse
+    - name: Pack Solution
+      run: |
+        Set-Alias SolutionPackager $env:TOOLS_FOLDER\CoreTools\SolutionPackager.exe
+
+        SolutionPackager `
+          /action:Pack `
+          /zipfile:$env:GITHUB_WORKSPACE\packed-solutions\$env:SOLUTION_NAME.zip `
+          /packagetype:Both `
+          /folder:solutions\$env:SOLUTION_NAME

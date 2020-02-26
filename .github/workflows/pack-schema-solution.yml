@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 env:
-  TOOLS_FOLDER: ${{ env.GITHUB_WORKSPACE }}\tools
+  TOOLS_FOLDER: ${{ github.workspace }}\tools
 
 jobs:
   build:

@@ -51,8 +51,10 @@ jobs:
       run: |
         $conn = Get-CrmConnection `
           -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
-        Invoke-CrmWhoAmI `
-          -conn $conn
+        Import-CrmSolution `
+          -conn $conn `
+          -SolutionFilePath $env:GITHUB_WORKSPACE\packed-solutions\$env:SOLUTION_NAME_managed.zip `
+          -AsyncOperationImportMethod
       shell: powershell
       env:
         CDS_SERVICE_USERNAME: ${{ secrets.CDS_SERVICE_USERNAME }}

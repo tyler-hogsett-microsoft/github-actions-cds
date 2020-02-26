@@ -45,6 +45,7 @@ jobs:
       run: |
         Install-Module `
           -Name Microsoft.Xrm.Data.PowerShell `
+          -Scope CurrentUser `
           -Force
     - name: Deploy Solution
       run: |

@@ -3,7 +3,6 @@ name: CI / CD
 on: [push]
 
 env:
-  TOOLS_FOLDER: ${{ github.workspace }}\tools
   SOLUTION_NAME: schema
   ENVIRONMENT_URL: https://githubactions.crm.dynamics.com/
 
@@ -12,29 +11,11 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install CDS CoreTools
-      run: |
-        ## Download nuget.exe
-        $sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-        $targetNugetExe = "$env:GITHUB_WORKSPACE\nuget.exe"
-        Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
-        Set-Alias nuget $targetNugetExe -Scope Global -Verbose
-
-        ## Download CoreTools
-        nuget install Microsoft.CrmSdk.CoreTools -O $env:TOOLS_FOLDER
-        md $env:TOOLS_FOLDER\CoreTools
-        $coreToolsFolder = Get-ChildItem $env:TOOLS_FOLDER | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
-        move $coreToolsFolder\content\bin\coretools\*.* $env:TOOLS_FOLDER\CoreTools
-        Remove-Item $coreToolsFolder -Force -Recurse
-    - name: Pack Solution
-      run: |
-        Set-Alias SolutionPackager $env:TOOLS_FOLDER\CoreTools\SolutionPackager.exe
-
-        SolutionPackager `
-          /action:Pack `
-          /zipfile:$env:GITHUB_WORKSPACE\packed-solutions\$env:SOLUTION_NAME.zip `
-          /packagetype:Both `
-          /folder:solutions\$env:SOLUTION_NAME
+    - uses: tyler-hogsett-microsoft/cds-actions/pack-solution
+      with:
+        folder: solutions\${{ env.SOLUTION_NAME }}
+        zipFile: ${{ github.workspace }}\packed-solutions\${{ env.SOLUTION_NAME }}.zip
+        packageType: both
     - uses: actions/upload-artifact@v1
       with:
         name: packed-solutions
@@ -48,21 +29,9 @@ jobs:
       with:
         name: packed-solutions
         path: ${{ github.workspace }}\packed-solutions
-    - name: Install Microsoft.Xrm.Data.Powershell
-      run: |
-        Install-Module `
-          -Name Microsoft.Xrm.Data.Powershell `
-          -Force
-      shell: powershell
-    - name: Deploy Solution
-      run: |
-        $conn = Get-CrmConnection `
-          -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
-        Import-CrmSolution `
-          -conn $conn `
-          -SolutionFilePath $env:GITHUB_WORKSPACE\packed-solutions\$($env:SOLUTION_NAME)_managed.zip `
-          -AsyncOperationImportMethod
-      shell: powershell
-      env:
-        CDS_SERVICE_USERNAME: ${{ secrets.CDS_SERVICE_USERNAME }}
-        CDS_SERVICE_PASSWORD: ${{ secrets.CDS_SERVICE_PASSWORD }}
+    - uses: tyler-hogsett-microsoft/cds-actions/import-solution
+      with:
+        username: ${{ secrets.CDS_SERVICE_USERNAME }}
+        password: ${{ secrets.CDS_SERVICE_PASSWORD }}
+        url: ${{ env.ENVIRONMENT_URL }}
+        zipFile: ${{ github.workspace }}\packed-solutions\${{ env.SOLUTION_NAME }}_managed.zip

@@ -5,6 +5,7 @@ on: [push]
 env:
   TOOLS_FOLDER: ${{ github.workspace }}\tools
   SOLUTION_NAME: schema
+  ENVIRONMENT_URL: https://githubactions.crm.dynamics.com/
 
 jobs:
   build:
@@ -45,3 +46,10 @@ jobs:
         Install-Module `
           -Name Microsoft.Xrm.Data.PowerShell `
           -Force
+    - name: Deploy Solution
+      run: |
+        $conn = Get-CrmConnection `
+          -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
+      env:
+        CDS_SERVICE_USERNAME: ${{ secrets.CDS_SERVICE_USERNAME }}
+        CDS_SERVICE_PASSWORD: ${{ secrets.CDS_SERVICE_PASSWORD }}

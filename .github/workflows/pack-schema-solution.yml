@@ -36,3 +36,7 @@ jobs:
           /zipfile:$env:GITHUB_WORKSPACE\packed-solutions\$env:SOLUTION_NAME.zip `
           /packagetype:Both `
           /folder:solutions\$env:SOLUTION_NAME
+    - uses: actions/upload-artifact@v1
+      with:
+        name: packed-solutions
+        path: ${{ github.workspace }}\packed-solutions

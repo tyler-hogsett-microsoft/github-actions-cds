@@ -9,9 +9,7 @@ env:
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Install CDS CoreTools
@@ -53,7 +51,7 @@ jobs:
           -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
         Import-CrmSolution `
           -conn $conn `
-          -SolutionFilePath $env:GITHUB_WORKSPACE\packed-solutions\$env:SOLUTION_NAME_managed.zip `
+          -SolutionFilePath $env:GITHUB_WORKSPACE\packed-solutions\$($env:SOLUTION_NAME)_managed.zip `
           -AsyncOperationImportMethod
       shell: powershell
       env:

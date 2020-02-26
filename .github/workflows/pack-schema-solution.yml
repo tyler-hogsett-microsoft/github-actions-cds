@@ -44,10 +44,7 @@ jobs:
     - name: Install PowerShell Modules
       run: |
         Install-Module `
-          -Name Microsoft.Xrm.Tooling.CrmConnector.Powershell `
-          -Force
-        Install-Module `
-          -Name Microsoft.Xrm.Data.PowerShell `
+          -Name Microsoft.Xrm.Data.Powershell `
           -Force
         Set-ExecutionPolicy –ExecutionPolicy RemoteSigned –Scope CurrentUser
       shell: powershell

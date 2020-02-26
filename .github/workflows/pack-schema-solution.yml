@@ -21,17 +21,17 @@ jobs:
         name: packed-solutions
         path: ${{ github.workspace }}\packed-solutions
 
-  deploy:
-    needs: build
-    runs-on: windows-latest
-    steps:
-    - uses: actions/download-artifact@v1
-      with:
-        name: packed-solutions
-        path: ${{ github.workspace }}\packed-solutions
-    - uses: tyler-hogsett-microsoft/cds-actions/import-solution
-      with:
-        username: ${{ secrets.CDS_SERVICE_USERNAME }}
-        password: ${{ secrets.CDS_SERVICE_PASSWORD }}
-        url: ${{ env.ENVIRONMENT_URL }}
-        zipFile: ${{ github.workspace }}\packed-solutions\${{ env.SOLUTION_NAME }}_managed.zip
+#  deploy:
+#    needs: build
+#    runs-on: windows-latest
+#    steps:
+#    - uses: actions/download-artifact@v1
+#      with:
+#        name: packed-solutions
+#        path: ${{ github.workspace }}\packed-solutions
+#    - uses: tyler-hogsett-microsoft/cds-actions/import-solution
+#      with:
+#        username: ${{ secrets.CDS_SERVICE_USERNAME }}
+#        password: ${{ secrets.CDS_SERVICE_PASSWORD }}
+#        url: ${{ env.ENVIRONMENT_URL }}
+#        zipFile: ${{ github.workspace }}\packed-solutions\${{ env.SOLUTION_NAME }}_managed.zip

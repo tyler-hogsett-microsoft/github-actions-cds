@@ -41,16 +41,14 @@ jobs:
       with:
         name: packed-solutions
         path: ${{ github.workspace }}\packed-solutions
-    - name: Install PowerShell Modules
+    - name: Install Microsoft.Xrm.Data.Powershell
       run: |
         Install-Module `
           -Name Microsoft.Xrm.Data.Powershell `
           -Force
-        Set-ExecutionPolicy –ExecutionPolicy RemoteSigned –Scope CurrentUser
       shell: powershell
     - name: Deploy Solution
       run: |
-        Import-Module Microsoft.Xrm.Tooling.CrmConnector.PowerShell
         $conn = Get-CrmConnection `
           -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
         Invoke-CrmWhoAmI `

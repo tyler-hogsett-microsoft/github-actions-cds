@@ -1,4 +1,4 @@
-name: Pack Schema Solution
+name: CI
 
 on: [push]
 

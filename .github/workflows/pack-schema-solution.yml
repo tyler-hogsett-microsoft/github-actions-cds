@@ -49,8 +49,7 @@ jobs:
         Install-Module `
           -Name Microsoft.Xrm.Data.PowerShell `
           -Force
-        Get-InstalledModule `
-          -Name Microsoft.Xrm.Data.PowerShell
+        Set-ExecutionPolicy –ExecutionPolicy RemoteSigned –Scope CurrentUser
     - name: Deploy Solution
       run: |
         Get-InstalledModule `

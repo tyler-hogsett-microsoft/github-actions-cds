@@ -39,6 +39,14 @@ jobs:
       with:
         name: packed-solutions
         path: ${{ github.workspace }}\packed-solutions
+
+  deploy:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: packed-solutions
+        path: ${{ github.workspace }}\packed-solutions
     - name: Install Microsoft.Xrm.Data.Powershell
       run: |
         Install-Module `

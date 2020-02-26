@@ -17,7 +17,7 @@ jobs:
         Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
         Set-Alias nuget $targetNugetExe -Scope Global -Verbose
 
-        $toolsFolder = $env:GITHUB_WORKSPACE\tools
+        $toolsFolder = "$env:GITHUB_WORKSPACE\tools"
         ## Download CoreTools
         nuget install Microsoft.CrmSdk.CoreTools -O $toolsFolder
         md $toolsFolder\CoreTools

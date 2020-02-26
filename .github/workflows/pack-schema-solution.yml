@@ -57,6 +57,7 @@ jobs:
           -ConnectionString "AuthType=Office365; Username=$env:CDS_SERVICE_USERNAME; Password=$env:CDS_SERVICE_PASSWORD; Url=$env:ENVIRONMENT_URL"
         Invoke-CrmWhoAmI `
           -conn $conn
+      shell: powershell
       env:
         CDS_SERVICE_USERNAME: ${{ secrets.CDS_SERVICE_USERNAME }}
         CDS_SERVICE_PASSWORD: ${{ secrets.CDS_SERVICE_PASSWORD }}

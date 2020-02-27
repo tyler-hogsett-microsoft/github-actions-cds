@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: tyler-hogsett-microsoft/cds-actions-pack-solution@v0
+    - uses: tyler-hogsett-microsoft/cds-actions-pack-solution@master
       with:
         folder: solutions\${{ env.SOLUTION_NAME }}
         zipFile: ${{ github.workspace }}\packed-solutions\${{ env.SOLUTION_NAME }}.zip

@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: tyler-hogsett-microsoft/cds-actions-pack-solution@master
       with:
-        folder: solutions\${{ env.SOLUTION_NAME }}
+        folder: ${{ github.workspace }}\${{ github.repository }}\solutions\${{ env.SOLUTION_NAME }}
         zipFile: ${{ github.workspace }}\packed-solutions\${{ env.SOLUTION_NAME }}.zip
         packageType: both
     - uses: actions/upload-artifact@v1

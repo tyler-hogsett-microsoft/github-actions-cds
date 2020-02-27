@@ -16,10 +16,10 @@ jobs:
         folder: solutions\${{ env.SOLUTION_NAME }}
         zipFile: ${{ github.workspace }}\packed-solutions\${{ env.SOLUTION_NAME }}.zip
         packageType: both
-#    - uses: actions/upload-artifact@v1
-#      with:
-#        name: packed-solutions
-#        path: ${{ github.workspace }}\packed-solutions
+    - uses: actions/upload-artifact@v1
+      with:
+        name: packed-solutions
+        path: ${{ github.workspace }}\packed-solutions
 
 #  deploy:
 #    needs: build
